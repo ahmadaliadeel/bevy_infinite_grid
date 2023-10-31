@@ -6,6 +6,7 @@ fn main() {
     App::new()
         .add_plugins((DefaultPlugins, CameraControllerPlugin, InfiniteGridPlugin))
         .add_systems(Startup, setup_system)
+        
         .run();
 }
 
@@ -42,9 +43,9 @@ fn setup_system(
     // cube
     commands.spawn(PbrBundle {
         material: mat.clone(),
-        mesh: meshes.add(Mesh::from(shape::Cube { size: 1.0 })),
+        mesh: meshes.add(Mesh::from(shape::Cube { size: 0.5 })),
         transform: Transform {
-            translation: Vec3::new(3., 4., 0.),
+            translation: Vec3::new(-2., 0., 0.),
             rotation: Quat::from_rotation_arc(Vec3::Y, Vec3::ONE.normalize()),
             scale: Vec3::splat(1.5),
         },
@@ -53,8 +54,8 @@ fn setup_system(
 
     commands.spawn(PbrBundle {
         material: mat.clone(),
-        mesh: meshes.add(Mesh::from(shape::Cube { size: 2.0 })),
-        transform: Transform::from_xyz(0.0, 2.0, 0.0),
+        mesh: meshes.add(Mesh::from(shape::Cube { size: 10.0 })),
+        transform: Transform::from_xyz(5.0, 0.0, 0.0),
         ..default()
     });
 }

@@ -1,7 +1,5 @@
 mod render;
 
-pub use render::RenderSettings;
-
 use bevy::math::{Vec3Swizzles, Vec4Swizzles};
 use bevy::prelude::*;
 use bevy::render::primitives::Aabb;
@@ -29,7 +27,7 @@ impl Plugin for InfiniteGridPlugin {
 
 #[derive(Resource, Default)]
 pub struct InfiniteGridSettings {
-    pub render_settings: RenderSettings,
+    
 }
 
 #[derive(Component, Copy, Clone)]
@@ -41,6 +39,7 @@ pub struct InfiniteGrid {
     pub major_line_color: Color,
     pub fadeout_distance: f32,
     pub dot_fadeout_strength: f32,
+    pub major_scale: f32
 }
 
 impl Default for InfiniteGrid {
@@ -53,6 +52,7 @@ impl Default for InfiniteGrid {
             major_line_color: Color::rgb(0.25, 0.25, 0.25),
             fadeout_distance: 100.,
             dot_fadeout_strength: 0.25,
+            major_scale: 0.0
         }
     }
 }
@@ -223,6 +223,11 @@ fn track_frustum_intersect_system(
         if let Some(intersect) = slot {
             commands.entity(entity).insert(intersect);
         }
+
+        let dist_cam2origin = ((cam_pos.translation() - grid.translation())).length();
+        let warp = (dist_cam2origin / 10.0);
+        let warp_int = (warp).trunc();
+        println!("Major SCALE: {} units", warp_int);
     }
 }
 
